@@ -1,22 +1,22 @@
 # Sistema de Senhas
 
-Aplicacao local para armazenar senhas em um arquivo criptografado, com API FastAPI e interface React.
+Aplicação local para armazenar senhas em um arquivo criptografado, com API FastAPI e interface React.
 
 ## Stack
 
 - Backend: Python + FastAPI
 - Frontend: React + TypeScript + Vite
-- Persistencia: arquivo local criptografado em `%APPDATA%\SistemaDeSenhas\vault.senhas`
-- Criptografia: Argon2id para derivar chave de senha humana e AES-GCM para proteger o cofre
-- Distribuicao: PyInstaller para gerar `.exe`; MSI pode ser criado depois com WiX Toolset usando o `.exe`
+- Persistência: arquivo local criptografado em `%APPDATA%\SistemaDeSenhas\vault.senhas`
+- Criptografia: Argon2id para derivar uma chave a partir da senha do usuário e AES-GCM para proteger o cofre
+- Distribuição: PyInstaller para gerar `.exe`; um MSI pode ser criado posteriormente com WiX Toolset usando o `.exe`
 
 ## Modelo de acesso
 
 - `admin`: cria, edita, exclui, revela e copia senhas
-- `user`: lista, revela e copia senhas, sem funcoes CRUD
-- pelo login `admin`, e possivel alterar a senha de login dos perfis `admin` e `user`
+- `user`: lista, revela e copia senhas, sem funções CRUD
+- pelo login `admin`, é possível alterar a senha de login dos perfis `admin` e `user`
 
-Na primeira abertura, a tela de setup cria os dois usuarios e o cofre local. O arquivo `vault.senhas` nao depende de MySQL, PostgreSQL, SQLite ou servidor remoto.
+Na primeira abertura, a tela de configuração inicial cria os dois usuários e o cofre local. O arquivo `vault.senhas` não depende de MySQL, PostgreSQL, SQLite ou servidor remoto.
 
 ## Desenvolvimento
 
@@ -28,7 +28,7 @@ URLs:
 
 - Frontend: `http://127.0.0.1:5173`
 - Backend: `http://127.0.0.1:8777`
-- API docs: `http://127.0.0.1:8777/docs`
+- Documentação da API: `http://127.0.0.1:8777/docs`
 
 ## Testes
 
@@ -37,13 +37,13 @@ cd backend
 .\.venv\Scripts\python -m pytest
 ```
 
-## Build EXE
+## Build do EXE
 
 ```powershell
 .\scripts\build_exe.ps1
 ```
 
-O executavel final fica em:
+O executável final fica em:
 
 ```text
 backend\dist\SistemaDeSenhas.exe
@@ -52,15 +52,15 @@ backend\dist\SistemaDeSenhas.exe
 Ao abrir o `.exe`, ele:
 
 - inicia o backend FastAPI embutido;
-- serve o frontend React ja compilado;
+- serve o frontend React já compilado;
 - usa `127.0.0.1`, sem expor o app na rede;
 - tenta a porta `8777` e, se estiver ocupada, escolhe outra porta local;
 - abre o navegador automaticamente;
 - grava logs em `%APPDATA%\SistemaDeSenhas\logs\desktop.log`.
 
-## Observacoes de seguranca
+## Observações de segurança
 
-- O backend escuta em `127.0.0.1`, nao em `0.0.0.0`.
-- As senhas salvas no cofre nao ficam em texto puro no disco.
-- As sessoes ficam apenas em memoria e expiram automaticamente.
-- O arquivo local deve ser incluído em backup se voce quiser preservar o cofre entre reinstalacoes.
+- O backend escuta em `127.0.0.1`, não em `0.0.0.0`.
+- As senhas salvas no cofre não ficam em texto puro no disco.
+- As sessões ficam apenas em memória e expiram automaticamente.
+- O arquivo local deve ser incluído em backup se você quiser preservar o cofre entre reinstalações.
